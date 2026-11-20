@@ -1,0 +1,23 @@
+Partner Center 填法：Apps and games → ApkStart → 当前提交 → Store listings（商店一览）
+→ 选语言 → 「What's new in this version」（此版本中的新增功能），上限 1500 字符。
+中文、英文各填一次（每个语言单独保存）。
+
+说明：商店（MSIX）版的更新由 Microsoft Store 负责，更新时只下载变化的部分（差分更新），
+不会每次重装完整应用，也不会影响运行时、已装应用和快照。下面的「增量更新」一项描述的是
+从 GitHub / Gitee 安装的便携版新增能力，商店版用户无需关心、也不会因此重新下载系统镜像。
+
+—— 简体中文（粘贴下面整段）——
+
+0.6.3 更新：
+· 启动失败诊断更准确：以前只要看到 0xC0000135 就一律提示「重装 VC++ 运行库 / 杀毒删了文件」，现在会区分是真的缺运行库、还是商店版从只读目录启动子进程的路径限制、或是杀软隔离，并把你直接带到内置手册里对应的排查章节，不再让你反复重装却没用。
+· 内置手册新增 6.8 节「商店版启动失败 / 0xC0000135（DLL 加载失败）」：按步骤确认原因、定位具体缺失的 DLL；遇到启动失败会自动打开这一节。
+· 便携版新增增量更新：以后从 GitHub / Gitee 升级只下载几 MB 的程序代码，不再每次下载完整安装包，也不会重新下载安卓系统镜像、运行时、已装应用和快照；下载有哈希校验，失败自动回退完整包。商店版仍通过 Microsoft Store 更新。
+· 保留 0.6.2 的内置手册、故障自动教程、声音检测、ARM 安装修复，以及更早的原生窗口接管、换向等待、首帧判定与双实例保护。
+
+—— English (United States) ——
+
+What's new in 0.6.3:
+· More accurate startup-failure diagnosis. A 0xC0000135 error no longer always means "reinstall VC++ / your antivirus deleted a file". ApkStart now distinguishes a genuinely missing runtime from the read-only path restrictions of the Store package and from antivirus quarantine, and takes you straight to the matching section of the built-in manual instead of sending you to reinstall again and again.
+· The built-in manual gains section 6.8, "Store launch failure / 0xC0000135 (DLL load failure)", with steps to confirm the cause and identify the exact missing DLL. It opens automatically when a launch failure is detected.
+· Incremental updates for the portable build: upgrading from GitHub / Gitee now downloads only a few MB of program code instead of the full installer, and never re-downloads the Android system image, runtime, installed apps or snapshots. Downloads are hash-verified and fall back to the full package on any failure. Store builds continue to update through Microsoft Store.
+· Keeps 0.6.2 features (built-in manual, automatic help tutorials, sound diagnostics, ARM install fixes) and earlier fixes: native window hand-over, orientation-switch progress, first-frame detection and dual-instance protection.

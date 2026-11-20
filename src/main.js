@@ -2007,7 +2007,11 @@ function registerIpc() {
       if (!doctor.vcRedistOk()) {
         issues.push({
           code: 'vcRedist', severity: 'error', title: '缺少 VC++ 运行库（x64）',
-          hint: '安卓运行时依赖微软 VC++ 2015-2022，缺失会导致模拟器无法启动（0xc0000135）。', fix: 'vcRedist',
+          // 这一条是实测 dll 文件不存在才报，可信。但要说清：0xC0000135 不等于
+          // 一定是缺 VC++——商店版从 WindowsApps 起子进程也会报同码。装完若仍
+          // 起不来，按内置手册 6.8 继续定位，别反复重装运行库。
+          hint: '实测系统缺少微软 VC++ 2015-2022（x64），安卓运行时依赖它。'
+            + '可一键安装；若装完仍报 0xC0000135，见内置手册 6.8——商店版还可能是子进程 DLL 路径问题。', fix: 'vcRedist',
         });
       }
       accel = await runtime.provisioner.emulatorAccel().catch(() => ({ ok: false }));
@@ -2974,6 +2978,8 @@ if (!gotLock) {
       exePath: process.execPath,
       isPackaged: app.isPackaged,
       dataDir: store.DATA_DIR,
+      // 增量更新的前提：本机 Electron 版本与发版时一致，才只换代码层
+      electronVersion: process.versions.electron,
       // 让更新器能读到「只走 GitHub / 只走 Gitee / 自动选快」和镜像前缀设置
       settings: () => store.getSettings(),
       onProgress: (p) => send('update:progress', p),
